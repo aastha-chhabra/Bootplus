@@ -1,0 +1,196 @@
+---
+title: "Quick Start Guide"
+author: "Aashish"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Quick Start Guide}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+# bootplus Quick Start Guide
+
+Welcome to **bootplus**! This guide will show you how to use the three main capabilities of the package in just a few minutes.
+
+## Installation
+
+```{r, eval=FALSE}
+# Install from GitHub (devtools required)
+devtools::install_github("YOUR_USERNAME/bootplus")
+```
+
+```{r setup}
+library(bootplus)
+library(boot)
+```
+
+---
+
+## Part 1: Classical Bootstrap with Visualization
+
+The `boot` package is fantastic for resampling, but `bootplus` adds modern visualization and interpretation tools.
+
+### Example: Bootstrap the mean of `mtcars$mpg`
+
+```{r classical-bootstrap, fig.width=7, fig.height=5}
+set.seed(42)
+
+# Perform bootstrap
+b <- boot(mtcars$mpg, function(d, i) mean(d[i]), R = 2000)
+
+# Visualize the bootstrap distribution
+boot_viz(b)
+```
+
+The plot shows:
+- **Histogram** of bootstrap replicates
+- **Density curve** overlaid
+- **Original statistic** (vertical black line)
+- **Confidence interval** (shaded region)
+- **Bias annotation** (how far bootstrap mean is from original)
+
+### Interpret the results
+
+```{r interpret}
+# Get a human-readable summary
+boot_interpret(b)
+```
+
+This tells you:
+- Whether bias is negligible or substantial
+- The standard error of your estimate
+- A tidy confidence interval
+- A narrative conclusion
+
+### Compare confidence interval methods
+
+```{r ci-comparison}
+# See which CI method gives the widest/narrowest interval
+boot_ci_plot(b)
+
+# Get the numbers
+boot_compare_ci(b)
+```
+
+Different CI methods (Normal, Basic, Percentile, BCa) can give slightly different results. This visualization helps you choose or understand the tradeoffs.
+
+### Full report
+
+For a comprehensive summary, use `boot_report()`:
+
+```{r report}
+# One function that does everything
+boot_report(b)
+```
+
+---
+
+## Part 2: Bayesian Bootstrap
+
+The Bayesian bootstrap (Rubin, 1981) offers a Bayesian perspective on bootstrap inference. Instead of resampling with replacement, we assign random weights (from a Dirichlet distribution) and compute the statistic on the weighted data.
+
+### Example: Bayesian bootstrap of a weighted mean
+
+```{r bayesian-bootstrap, fig.width=7, fig.height=5}
+# Some data
+x <- c(2, 4, 5, 8, 10)
+
+# A statistic that takes data and weights
+weighted_mean <- function(data, weights) {
+  sum(data * weights)
+}
+
+# Perform Bayesian bootstrap
+bb <- boot_bayes(x, weighted_mean, R = 4000, seed = 42)
+
+# Print summary
+print(bb)
+```
+
+### Visualize the posterior
+
+```{r bayes-viz}
+# Plot the posterior distribution with credible interval
+boot_bayes_plot(bb)
+```
+
+The shaded region shows the 95% credible interval — the Bayesian equivalent of a confidence interval.
+
+---
+
+## Part 3: Using bootplus with your own statistics
+
+Both visualization and interpretation work with *any* statistic you define. Here are some examples:
+
+### Median
+
+```{r median-example, fig.width=7, fig.height=5}
+b_median <- boot(mtcars$mpg, function(d, i) median(d[i]), R = 2000)
+boot_viz(b_median, title = "Bootstrap distribution of median MPG")
+boot_interpret(b_median)
+```
+
+### Correlation
+
+```{r correlation-example, fig.width=7, fig.height=5}
+b_cor <- boot(mtcars[, c("mpg", "wt")], 
+              function(d, i) cor(d[i, "mpg"], d[i, "wt"]), 
+              R = 2000)
+boot_viz(b_cor, title = "Bootstrap distribution of correlation")
+boot_interpret(b_cor)
+```
+
+### Custom statistic: Ratio of means
+
+```{r ratio-example}
+ratio_means <- function(d, i) {
+  mean(d[i, "mpg"]) / mean(d[i, "wt"])
+}
+b_ratio <- boot(mtcars[, c("mpg", "wt")], ratio_means, R = 2000)
+boot_viz(b_ratio)
+```
+
+---
+
+## Key Functions at a Glance
+
+### Visualization
+- **`boot_viz()`** — Full diagnostic plot (histogram + density + CI + bias)
+- **`boot_density()`** — Streamlined density plot only
+- **`boot_ci_plot()`** — Compare CI methods visually
+- **`boot_dist_plot()`** — See all replicates as a tile strip
+
+### Interpretation
+- **`boot_interpret()`** — Structured text summary
+- **`boot_compare_ci()`** — Tidy data frame of CI widths
+- **`boot_report()`** — Complete report (interpretation + CI comparison + diagnostics)
+
+### Bayesian Bootstrap
+- **`boot_bayes()`** — Perform Bayesian bootstrap
+- **`boot_bayes_plot()`** — Visualize posterior with credible interval
+
+---
+
+## Next Steps
+
+- Check `?boot_viz` (or any function) for full parameter details
+- Look at the examples in each function's help file
+- Visit the [GitHub repository](https://github.com/YOUR_USERNAME/bootplus) for issue reports and discussions
+
+## References
+
+- Davison, A.C. & Hinkley, D.V. (1997). *Bootstrap Methods and Their Application*. Cambridge University Press.
+- Efron, B. & Tibshirani, R.J. (1993). *An Introduction to the Bootstrap*. Chapman & Hall/CRC.
+- Rubin, D.B. (1981). The Bayesian bootstrap. *Annals of Statistics*, 9(1), 130–134.
+
+---
+
+Happy bootstrapping! 🎉
