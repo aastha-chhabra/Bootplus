@@ -190,7 +190,3 @@ boot_viz(b_ratio)
 - Davison, A.C. & Hinkley, D.V. (1997). *Bootstrap Methods and Their Application*. Cambridge University Press.
 - Efron, B. & Tibshirani, R.J. (1993). *An Introduction to the Bootstrap*. Chapman & Hall/CRC.
 - Rubin, D.B. (1981). The Bayesian bootstrap. *Annals of Statistics*, 9(1), 130–134.
-
----
-
-Happy bootstrapping! 🎉
