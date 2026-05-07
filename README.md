@@ -116,25 +116,15 @@ boot_bayes_plot(bb)
 
 ---
 
-## Design Philosophy
+## Package Overview
 
-```
-┌─────────────────────────────────────────────────┐
-│                  User Code                      │
-│                                                 │
-│   boot()   ──►  boot_viz()                      │
-│            ──►  boot_interpret()                │
-│            ──►  boot_report()                   │
-│                                                 │
-│   boot_bayes()  ──►  boot_bayes_plot()          │
-└─────────────────────────────────────────────────┘
-        │                     │
-        ▼                     ▼
-   ┌─────────┐        ┌────────────┐
-   │  boot   │        │  ggplot2   │
-   │ package │        │  package   │
-   └─────────┘        └────────────┘
-```
+`bootplus` provides a set of user-friendly functions that build on two core R packages: `boot` and `ggplot2`.
+
+The standard bootstrap workflow starts with the `boot()` function from the `boot` package. Users pass the resulting bootstrap object to `boot_viz()` for visualisation, `boot_interpret()` for plain‑language interpretation, and `boot_report()` for generating a complete summary report.
+
+For Bayesian bootstrap analysis, `boot_bayes()` runs the bootstrap and `boot_bayes_plot()` creates the corresponding plots.
+
+All visualisation functions rely on `ggplot2`, while the inference functions leverage the calculations from `boot`. This structure keeps `bootplus` lightweight and extensible.
 
 - **Non-invasive**: Works with existing `boot` objects — no custom classes needed for classical bootstrap.
 - **Composable**: Every visualization function returns a `ggplot` object you can further customize.
