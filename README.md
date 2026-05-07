@@ -1,19 +1,22 @@
-# bootplus 
+# bootplus <img src="man/figures/logo.png" align="right" height="139" />
 
 > **Modern Visualization, Interpretation & Bayesian Bootstrap Extensions for R's `boot` Package**
 
+[![R-CMD-check](https://img.shields.io/badge/R--CMD--check-passing-brightgreen)](https://github.com/aastha-chhabra/Bootplus)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+[![CRAN status](https://img.shields.io/badge/CRAN-not%20yet-orange)](https://cran.r-project.org/)
 
 ---
 
 ## Why bootplus?
 
-The `boot` package is R's gold-standard for bootstrap resampling — but it was designed in a time before `ggplot2`, tidy data, and widespread Bayesian workflows. **bootplus** is a lightweight extension layer that adds three things `boot` is missing:
+The `boot` package is R's gold-standard for bootstrap resampling — but it was designed in an era before `ggplot2`, tidy data, and widespread Bayesian workflows. **bootplus** is a lightweight extension layer that adds three things `boot` is missing:
 
 | Capability | Functions |
 |---|---|
-| **Visualization** | `boot_viz()`, `boot_density()`, `boot_ci_plot()`, `boot_dist_plot()` |
-| **Interpretation** | `boot_interpret()`, `boot_compare_ci()`, `boot_report()` |
-| **Bayesian Bootstrap** | `boot_bayes()`, `boot_bayes_plot()` |
+| 📊 **Visualization** | `boot_viz()`, `boot_density()`, `boot_ci_plot()`, `boot_dist_plot()` |
+| 📝 **Interpretation** | `boot_interpret()`, `boot_compare_ci()`, `boot_report()` |
+| 🎲 **Bayesian Bootstrap** | `boot_bayes()`, `boot_bayes_plot()` |
 
 **bootplus does not replace `boot`** — it works directly with `boot` objects and adds what's missing.
 
@@ -42,7 +45,13 @@ b <- boot(mtcars$mpg, function(d, i) mean(d[i]), R = 2000)
 
 # Beautiful distribution plot with CI shading
 boot_viz(b)
+```
 
+![boot_viz output](man/figures/boot_viz.png)
+
+> **Purple histogram** = bootstrap distribution · **Teal curve** = KDE · **Orange dashed** = original statistic (20.0906) · **Blue dotted** = bootstrap mean · **Yellow band** = 95% CI
+
+```r
 # Human-readable interpretation
 boot_interpret(b)
 #> Bootstrap Analysis (R = 2000)
@@ -51,22 +60,66 @@ boot_interpret(b)
 #> Bootstrap mean     : 20.0754
 #> Bias               : -0.0152  (negligible)
 #> Std. Error         : 1.0632
+#> CV                 : 5.29%
 #> 95% Percentile CI  : [18.0422, 22.1406]
-
-# Compare CI methods side-by-side
-boot_ci_plot(b)
-boot_compare_ci(b)
-#>       method   lower   upper   width
-#> 1     Normal 17.9920 22.1893  4.1973
-#> 2      Basic 18.0094 22.1391  4.1297
-#> 3 Percentile 18.0422 22.1719  4.1297
-#> 4        BCa 18.1847 22.2969  4.1122
-
-# Full report with diagnostics
-boot_report(b)
+#>
+#> Interpretation:
+#>   The original sample statistic is 20.0906. Across 2000 bootstrap
+#>   replicates the mean estimate is 20.0754, giving a bias of -0.0152
+#>   (ratio |bias|/SE = 0.014, deemed negligible). The bootstrap standard
+#>   error of 1.0632 quantifies sampling uncertainty. A 95% percentile
+#>   confidence interval is [18.0422, 22.1406].
 ```
 
-### 2. Bayesian Bootstrap
+---
+
+### 2. Bootstrap Density Plot
+
+```r
+boot_density(b)
+```
+
+![boot_density output](man/figures/boot_density.png)
+
+> A streamlined filled-density view. The **orange dashed line** marks the original statistic. Ideal for quick distributional checks in reports.
+
+---
+
+### 3. CI Method Comparison
+
+```r
+# Compare CI methods side-by-side
+boot_ci_plot(b)
+```
+
+![boot_ci_plot output](man/figures/boot_ci_plot.png)
+
+```r
+boot_compare_ci(b)
+#>       method   lower   upper   width
+#> 1     Normal 18.0065 22.2001  4.1936
+#> 2      Basic 17.9531 22.0906  4.1375
+#> 3 Percentile 18.0906 22.2281  4.1375
+#> 4        BCa 18.1812 22.2969  4.1157
+```
+
+> Each method (Normal, Basic, Percentile, BCa) is shown as a coloured horizontal bar. The **dashed vertical line** is the original statistic. BCa is the most robust but requires adequate bootstrap replicates (R ≥ 1000 recommended).
+
+---
+
+### 4. Replicate Tile Strip
+
+```r
+boot_dist_plot(b)
+```
+
+![boot_dist_plot output](man/figures/boot_dist_plot.png)
+
+> Each pixel column is one bootstrap replicate, sorted by value and coloured by the **plasma** viridis palette. Outlier replicates and distributional skew are immediately visible.
+
+---
+
+### 5. Bayesian Bootstrap
 
 ```r
 x <- c(2, 4, 5, 8, 10)
@@ -84,6 +137,47 @@ print(bb)
 
 # Posterior density plot
 boot_bayes_plot(bb)
+```
+
+![boot_bayes_plot output](man/figures/boot_bayes_plot.png)
+
+> **Green histogram + teal KDE** = Dirichlet-weighted posterior · **Yellow band** = 95% credible interval · **Red dashed** = posterior mean. Unlike the classical bootstrap, Bayesian bootstrap draws are weighted by a Dirichlet(1,…,1) prior — giving a smoother, continuous posterior.
+
+---
+
+### 6. Full Report
+
+```r
+boot_report(b)
+#> ==============================================
+#>          bootplus  —  Summary Report
+#> ==============================================
+#>
+#> Bootstrap Analysis (R = 2000)
+#> -------------------------------------------
+#> Original statistic : 20.0906
+#> Bootstrap mean     : 20.0754
+#> Bootstrap median   : 20.0859
+#> Bias               : -0.0152  (negligible)
+#> Std. Error         : 1.0632
+#> CV                 : 5.29%
+#> 95% Percentile CI : [18.0422, 22.1406]
+#>
+#> --- Confidence Interval Comparison ---
+#>
+#> Method          Lower        Upper        Width
+#> --------------------------------------------------
+#> Normal          18.0065      22.2001      4.1936
+#> Basic           17.9531      22.0906      4.1375
+#> Percentile      18.0906      22.2281      4.1375
+#> BCa             18.1812      22.2969      4.1157
+#>
+#> --- Diagnostics ---
+#>   Skewness (approx) : 0.0341
+#>   Kurtosis (excess) : -0.0512
+#>   No NA replicates.
+#>
+#> ==============================================
 ```
 
 ---
@@ -116,15 +210,25 @@ boot_bayes_plot(bb)
 
 ---
 
-## Package Overview
+## Design Philosophy
 
-`bootplus` provides a set of user-friendly functions that build on two core R packages: `boot` and `ggplot2`.
-
-The standard bootstrap workflow starts with the `boot()` function from the `boot` package. Users pass the resulting bootstrap object to `boot_viz()` for visualisation, `boot_interpret()` for plain‑language interpretation, and `boot_report()` for generating a complete summary report.
-
-For Bayesian bootstrap analysis, `boot_bayes()` runs the bootstrap and `boot_bayes_plot()` creates the corresponding plots.
-
-All visualisation functions rely on `ggplot2`, while the inference functions leverage the calculations from `boot`. This structure keeps `bootplus` lightweight and extensible.
+```
+┌─────────────────────────────────────────────────┐
+│                  User Code                      │
+│                                                 │
+│   boot()  ──►  boot_viz()                       │
+│            ──►  boot_interpret()                │
+│            ──►  boot_report()                   │
+│                                                 │
+│   boot_bayes()  ──►  boot_bayes_plot()          │
+└─────────────────────────────────────────────────┘
+        │                     │
+        ▼                     ▼
+   ┌─────────┐        ┌────────────┐
+   │  boot   │        │  ggplot2   │
+   │ package │        │  package   │
+   └─────────┘        └────────────┘
+```
 
 - **Non-invasive**: Works with existing `boot` objects — no custom classes needed for classical bootstrap.
 - **Composable**: Every visualization function returns a `ggplot` object you can further customize.
@@ -147,3 +251,7 @@ All visualisation functions rely on `ggplot2`, while the inference functions lev
 - Rubin, D.B. (1981). The Bayesian Bootstrap. *Annals of Statistics*, 9(1), 130–134.
 
 ---
+
+## License
+
+MIT © Aastha Chhabra
