@@ -1,0 +1,31 @@
+# R package standard files
+*.Rproj
+.Rproj.user/
+.Rbuildignore
+.RData
+.Rhistory
+.DS_Store
+
+# Build artifacts
+man/*.Rd
+NAMESPACE
+
+# Documentation cache
+docs/
+site/
+
+# Vignette/RMarkdown cache
+vignettes/.cache/
+vignettes/*_cache/
+vignettes/*.html
+
+# Test & coverage
+.covr/
+coverage.xml
+.testthat/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*~
