@@ -1,6 +1,6 @@
 ---
 title: "Quick Start Guide"
-author: "Aashish"
+author: "Aastha"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
@@ -24,7 +24,7 @@ Welcome to **bootplus**! This guide will show you how to use the three main capa
 
 ```{r, eval=FALSE}
 # Install from GitHub (devtools required)
-devtools::install_github("YOUR_USERNAME/bootplus")
+devtools::install_github("aastha-chhabra/Bootplus")
 ```
 
 ```{r setup}
@@ -183,7 +183,7 @@ boot_viz(b_ratio)
 
 - Check `?boot_viz` (or any function) for full parameter details
 - Look at the examples in each function's help file
-- Visit the [GitHub repository](https://github.com/YOUR_USERNAME/bootplus) for issue reports and discussions
+- Visit the [GitHub repository](https://github.com/aastha-chhabra/Bootplus) for issue reports and discussions
 
 ## References
 
