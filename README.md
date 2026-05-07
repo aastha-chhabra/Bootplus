@@ -23,7 +23,7 @@ The `boot` package is R's gold-standard for bootstrap resampling — but it was 
 
 ```r
 # Install from GitHub (devtools required)
-devtools::install_github("YOUR_USERNAME/bootplus")
+devtools::install_github("aastha-chhabra/Bootplus")
 ```
 
 ---
@@ -122,7 +122,7 @@ boot_bayes_plot(bb)
 ┌─────────────────────────────────────────────────┐
 │                  User Code                      │
 │                                                 │
-│   boot()  ──►  boot_viz()                       │
+│   boot()   ──►  boot_viz()                      │
 │            ──►  boot_interpret()                │
 │            ──►  boot_report()                   │
 │                                                 │
