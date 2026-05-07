@@ -1,0 +1,33 @@
+Package: bootplus
+Title: Modern Visualization, Interpretation, and Bayesian Bootstrap Extensions for 'boot'
+Version: 0.1.0
+Authors@R:
+    person("Aashish", role = c("aut", "cre"),
+           email = "your.email@example.com")
+Description: Extends the 'boot' package with three modern capabilities:
+    (1) rich ggplot2-based visualizations of bootstrap distributions, bias,
+    confidence intervals, and comparison plots; (2) human-readable
+    interpretation of bootstrap output including bias, standard error, and
+    confidence intervals; (3) a Bayesian bootstrap workflow using Dirichlet
+    weighting (Rubin, 1981) with posterior summaries and credible interval
+    visualizations. Designed as a non-invasive extension layer that works
+    directly with 'boot' objects.
+License: MIT + file LICENSE
+Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.3.2
+Depends:
+    R (>= 3.5.0)
+Imports:
+    boot,
+    ggplot2 (>= 3.4.0),
+    stats,
+    grDevices
+Suggests:
+    testthat (>= 3.0.0),
+    knitr,
+    rmarkdown
+Config/testthat/edition: 3
+VignetteBuilder: knitr
+URL: https://github.com/YOUR_USERNAME/bootplus
+BugReports: https://github.com/YOUR_USERNAME/bootplus/issues
