@@ -1,22 +1,19 @@
-# bootplus <img src="man/figures/logo.png" align="right" height="139" />
+# bootplus 
 
 > **Modern Visualization, Interpretation & Bayesian Bootstrap Extensions for R's `boot` Package**
 
-[![R-CMD-check](https://img.shields.io/badge/R--CMD--check-passing-brightgreen)](https://github.com/YOUR_USERNAME/bootplus)
-[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
-[![CRAN status](https://img.shields.io/badge/CRAN-not%20yet-orange)](https://cran.r-project.org/)
 
 ---
 
 ## Why bootplus?
 
-The `boot` package is R's gold-standard for bootstrap resampling — but it was designed in an era before `ggplot2`, tidy data, and widespread Bayesian workflows. **bootplus** is a lightweight extension layer that adds three things `boot` is missing:
+The `boot` package is R's gold-standard for bootstrap resampling — but it was designed in a time before `ggplot2`, tidy data, and widespread Bayesian workflows. **bootplus** is a lightweight extension layer that adds three things `boot` is missing:
 
 | Capability | Functions |
 |---|---|
-| 📊 **Visualization** | `boot_viz()`, `boot_density()`, `boot_ci_plot()`, `boot_dist_plot()` |
-| 📝 **Interpretation** | `boot_interpret()`, `boot_compare_ci()`, `boot_report()` |
-| 🎲 **Bayesian Bootstrap** | `boot_bayes()`, `boot_bayes_plot()` |
+| **Visualization** | `boot_viz()`, `boot_density()`, `boot_ci_plot()`, `boot_dist_plot()` |
+| **Interpretation** | `boot_interpret()`, `boot_compare_ci()`, `boot_report()` |
+| **Bayesian Bootstrap** | `boot_bayes()`, `boot_bayes_plot()` |
 
 **bootplus does not replace `boot`** — it works directly with `boot` objects and adds what's missing.
 
