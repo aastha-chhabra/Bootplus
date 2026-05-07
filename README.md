@@ -157,7 +157,3 @@ boot_bayes_plot(bb)
 - Rubin, D.B. (1981). The Bayesian Bootstrap. *Annals of Statistics*, 9(1), 130–134.
 
 ---
-
-## License
-
-MIT © Aashish
