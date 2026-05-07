@@ -28,7 +28,7 @@ devtools::install_github("aastha-chhabra/Bootplus")
 
 ## Quick Start
 
-### 1. Classical Bootstrap → Visualize & Interpret
+### 1. Classical Bootstrap - Visualize & Interpret
 
 ```r
 library(boot)
@@ -50,20 +50,17 @@ boot_viz(b)
 # Human-readable interpretation
 boot_interpret(b)
 #> Bootstrap Analysis (R = 2000)
-#> -------------------------------------------
 #> Original statistic : 20.0906
 #> Bootstrap mean     : 20.0754
 #> Bias               : -0.0152  (negligible)
 #> Std. Error         : 1.0632
 #> CV                 : 5.29%
 #> 95% Percentile CI  : [18.0422, 22.1406]
-#>
 #> Interpretation:
-#>   The original sample statistic is 20.0906. Across 2000 bootstrap
-#>   replicates the mean estimate is 20.0754, giving a bias of -0.0152
-#>   (ratio |bias|/SE = 0.014, deemed negligible). The bootstrap standard
-#>   error of 1.0632 quantifies sampling uncertainty. A 95% percentile
-#>   confidence interval is [18.0422, 22.1406].
+#> The original sample statistic is 20.0906.
+#> Across 2000 bootstrap replicates the mean estimate is 20.0754, giving a bias of -0.0152 (ratio |bias|/SE = 0.014, deemed negligible).
+#> The bootstrap standard error of 1.0632 quantifies sampling uncertainty. 
+#> A 95% percentile confidence interval is [18.0422, 22.1406].
 ```
 
 ---
@@ -83,7 +80,7 @@ boot_density(b)
 ### 3. CI Method Comparison
 
 ```r
-# Compare CI methods side-by-side
+# Compare CI methods
 boot_ci_plot(b)
 ```
 
@@ -123,7 +120,6 @@ weighted_mean <- function(data, weights) sum(data * weights)
 bb <- boot_bayes(x, weighted_mean, R = 4000, seed = 42)
 print(bb)
 #> Bayesian Bootstrap
-#> ------------------
 #> Draws (R)          : 4000
 #> Posterior mean     : 5.7993
 #> Posterior median   : 5.7268
@@ -144,12 +140,7 @@ boot_bayes_plot(bb)
 
 ```r
 boot_report(b)
-#> ==============================================
-#>          bootplus  —  Summary Report
-#> ==============================================
-#>
 #> Bootstrap Analysis (R = 2000)
-#> -------------------------------------------
 #> Original statistic : 20.0906
 #> Bootstrap mean     : 20.0754
 #> Bootstrap median   : 20.0859
@@ -158,8 +149,7 @@ boot_report(b)
 #> CV                 : 5.29%
 #> 95% Percentile CI : [18.0422, 22.1406]
 #>
-#> --- Confidence Interval Comparison ---
-#>
+#> Confidence Interval Comparison
 #> Method          Lower        Upper        Width
 #> --------------------------------------------------
 #> Normal          18.0065      22.2001      4.1936
@@ -167,12 +157,11 @@ boot_report(b)
 #> Percentile      18.0906      22.2281      4.1375
 #> BCa             18.1812      22.2969      4.1157
 #>
-#> --- Diagnostics ---
+#> Diagnostics
 #>   Skewness (approx) : 0.0341
 #>   Kurtosis (excess) : -0.0512
 #>   No NA replicates.
 #>
-#> ==============================================
 ```
 
 ---
