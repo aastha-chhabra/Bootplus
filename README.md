@@ -5,7 +5,7 @@
 
 ## Why bootplus?
 
-The `boot` package is R's gold-standard for bootstrap resampling — but it was designed in an era before `ggplot2`, tidy data, and widespread Bayesian workflows. **bootplus** is a lightweight extension layer that adds three things `boot` is missing:
+The `boot` package is a standard R package for bootstrap resampling, but it was designed in a time before `ggplot2`, tidy data, and widespread Bayesian workflows. **bootplus** is a lightweight extension layer that adds three things `boot` is missing:
 
 | Capability | Functions |
 |---|---|
@@ -13,7 +13,7 @@ The `boot` package is R's gold-standard for bootstrap resampling — but it was 
 | **Interpretation** | `boot_interpret()`, `boot_compare_ci()`, `boot_report()` |
 | **Bayesian Bootstrap** | `boot_bayes()`, `boot_bayes_plot()` |
 
-**bootplus does not replace `boot`** — it works directly with `boot` objects and adds what's missing.
+**bootplus does not replace `boot`**, but it works directly with `boot` objects and adds what's missing.
 
 ---
 
